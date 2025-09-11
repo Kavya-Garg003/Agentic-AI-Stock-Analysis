@@ -1,0 +1,128 @@
+{
+  "company": "Apple Inc.",
+  "ticker": "AAPL",
+  "analysis_date": "2025-09-11T14:42:36.371492",
+  "data_sources": [
+    "financials",
+    "price_history",
+    "news"
+  ],
+  "analysis_results": {
+    "fundamental": {
+      "valuation": {
+        "pe_ratio": 34.36212,
+        "pb_ratio": 51.18257,
+        "ps_ratio": 8.236535,
+        "ev_ebitda": 24.08
+      },
+      "profitability": {
+        "gross_margin": 0.46678,
+        "operating_margin": 0.29990998,
+        "profit_margin": 0.24295999,
+        "roe": 1.49814,
+        "roa": 0.24545999
+      },
+      "liquidity": {
+        "current_ratio": 0.868,
+        "quick_ratio": 0.724
+      },
+      "leverage": {
+        "debt_to_equity": 154.486,
+        "total_debt": 101698002944,
+        "total_cash": 55372001280
+      },
+      "growth": {
+        "earnings_quarterly_growth": 0.093,
+        "earnings_growth": 0.121,
+        "revenue_growth": 0.096
+      },
+      "market": {
+        "market_cap": 3365654233088,
+        "beta": 1.109,
+        "institutional_ownership": 0.63639,
+        "volume": 80814115,
+        "average_volume": 54747006
+      }
+    },
+    "canslim": {
+      "canslim_analysis": {
+        "C": {
+          "score": 0,
+          "reasoning": "Apple's quarterly earnings growth is 0.093%, which is significantly below the 25% threshold required by the CANSLIM methodology."
+        },
+        "A": {
+          "score": 0,
+          "reasoning": "Apple's annual earnings growth is 0.121%, which is well below the 25% growth target over the last three years."
+        },
+        "N": {
+          "score": 1,
+          "reasoning": "Apple continues to innovate with new products like the iPhone 17 Pro and Pro Max, and advancements in AI and security features. Additionally, the stock is trading at a high price, which can attract momentum investors."
+        },
+        "S": {
+          "score": 1,
+          "reasoning": "Apple has a high trading volume of 80,814,115 shares, indicating strong liquidity and demand. Institutional ownership is also substantial at 63.639%, suggesting confidence from large investors."
+        },
+        "L": {
+          "score": 1,
+          "reasoning": "Apple's stock performance over the last three months (14.22%) has outperformed the broader market (8.47%), indicating it is a market leader."
+        },
+        "I": {
+          "score": 1,
+          "reasoning": "Institutional ownership is high at 63.639%, and recent news suggests continued interest from major investors, which is a positive sign."
+        },
+        "M": {
+          "score": 1,
+          "reasoning": "The overall market trend has been positive, with three of the last four quarters showing upward movement, aligning with the CANSLIM criteria."
+        }
+      },
+      "total_score": 5,
+      "recommendation": "HOLD",
+      "risk_level": "MEDIUM",
+      "confidence": 0.7,
+      "key_strengths": [
+        "Strong institutional sponsorship",
+        "Market leadership and outperformance",
+        "Continuous innovation and new product development"
+      ],
+      "key_weaknesses": [
+        "Low quarterly and annual earnings growth",
+        "High P/E ratio compared to industry average",
+        "Moderate debt-to-equity ratio"
+      ],
+      "summary": "Apple Inc. shows strengths in innovation, market leadership, and institutional support, but its weak earnings growth and high valuation metrics suggest caution. The overall CANSLIM score of 5 indicates a HOLD recommendation with a medium risk level."
+    },
+    "sentiment": {
+      "score": -0.08564340829542105,
+      "classification": "Neutral",
+      "headlines_analyzed": 15
+    },
+    "risk": {
+      "score": 4,
+      "max_score": 10,
+      "level": "Medium",
+      "factors": {
+        "debt_level": "High",
+        "liquidity": "Poor",
+        "quick_liquidity": "Concern",
+        "market_risk": "Low",
+        "profitability": "Strong",
+        "margins": "Healthy",
+        "volatility": "Moderate",
+        "growth_sustainability": "Positive"
+      }
+    },
+    "final_decision": {
+      "recommendation": "HOLD",
+      "total_score": 56.29,
+      "max_score": 100,
+      "confidence": 0.563,
+      "decision_factors": {
+        "fundamental_score": 22,
+        "canslim_score": 21.42857142857143,
+        "sentiment_score": 6.857674437784342,
+        "risk_score": 6.0
+      },
+      "reasoning": "High P/E ratio of 34.4 suggests premium valuation; Strong ROE of 149.8%; Strong CANSLIM score of 5/7"
+    }
+  }
+}
