@@ -63,6 +63,7 @@
             color: var(--text-main);
             font-family: 'JetBrains Mono', monospace;
             outline: none;
+            width: 200px;
         }
 
         input:focus {
@@ -81,7 +82,81 @@
         }
 
         button:hover { background: #00cc6a; }
+        
+        button:disabled { background: #333; color: #888; cursor: not-allowed; }
 
+        /* Landing View Specifics */
+        #landingView {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .landing-title {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-accent);
+            display: inline-block;
+            padding-bottom: 0.5rem;
+        }
+
+        .landing-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+
+        .landing-highlight {
+            color: var(--text-main);
+            border-left: 4px solid var(--secondary-accent);
+            padding-left: 1rem;
+            margin: 2rem 0;
+            background: rgba(0, 184, 255, 0.05);
+            padding: 1.5rem;
+        }
+
+        .arch-diagram {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .arch-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            position: relative;
+        }
+
+        .arch-node {
+            background: var(--surface-color);
+            border: 1px solid var(--primary-accent);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 0 15px var(--primary-glow);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .arch-node.secondary {
+            border-color: var(--secondary-accent);
+            box-shadow: 0 0 15px rgba(0, 184, 255, 0.1);
+        }
+
+        .arch-arrow {
+            color: var(--text-muted);
+            font-size: 2rem;
+        }
+
+        /* Dashboard Specifics */
         .dashboard {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -206,7 +281,7 @@
 <body>
 
 <div class="terminal-header">
-    <h1>AGENTIC_AI // TERMINAL</h1>
+    <h1>AGENTIC STOCK ANALYSIS TERMINAL</h1>
     <div class="search-panel">
         <input type="text" id="company" placeholder="COMPANY (e.g. Apple Inc.)" value="Apple Inc.">
         <input type="text" id="ticker" placeholder="TICKER (e.g. AAPL)" value="AAPL">
@@ -214,8 +289,74 @@
     </div>
 </div>
 
-<div class="loader" id="loader">Fetching agentic data & synthesizing... <span class="blink">_</span></div>
+<div class="loader" id="loader">Executing Agentic Workflow. Synthesizing data packets... <span class="blink">_</span></div>
 
+<!-- Landing / Architecture View -->
+<div id="landingView">
+    <div class="landing-title">Institutional Agentic Workflow</div>
+    
+    <div class="landing-text">
+        Welcome to the **Agentic Stock Analysis Terminal**. 
+        <br><br>
+        In high-stakes institutional finance, true "Autonomous Agents" (which blindly loop, guess, and iterate) are a liability—they are unpredictable, prone to hallucinations, and unacceptably slow.
+        <br><br>
+        To meet modern professional standards, this system relies on an <strong>Agentic Workflow</strong>. A central Orchestrator dictates a strict, deterministic, and highly reliable pipeline. It dispatches precise tasks to specialized sub-agents (Data Collection, FinBERT NLP, Quantitative Risk, and LLM Synthesis) to guarantee absolute accuracy every single time.
+    </div>
+
+    <div class="landing-highlight">
+        "Deterministic Orchestration. Absolute Transparency. Institutional Reliability."
+    </div>
+
+    <div class="arch-diagram">
+        <div style="text-align: center; color: var(--text-muted);">SYSTEM ARCHITECTURE</div>
+        
+        <div class="arch-row">
+            <div class="arch-node">
+                <span style="color:var(--text-muted); font-size:0.8rem">INPUT</span><br>
+                USER QUERY
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node" style="border-color: #fff; color: #fff;">
+                <span style="color:var(--text-muted); font-size:0.8rem">CORE</span><br>
+                ORCHESTRATOR
+            </div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node secondary">
+                <span style="color:var(--text-muted); font-size:0.8rem">OUTPUT</span><br>
+                TERMINAL UI
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content: center; gap: 4rem; margin-top: -1rem; margin-bottom: -1rem;">
+            <div style="border-left: 2px dashed #444; height: 50px;"></div>
+        </div>
+
+        <div class="arch-row" style="flex-wrap: wrap; max-width: 900px; margin: 0 auto;">
+            <div class="arch-node secondary" style="font-size: 0.9rem;">
+                <span style="color:var(--secondary-accent)">[01] DATA AGENT</span><br>
+                YFinance API<br>Company Profiling
+            </div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;">
+                <span style="color:var(--secondary-accent)">[02] NLP AGENT</span><br>
+                FinBERT Pipeline<br>News Sentiment
+            </div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;">
+                <span style="color:var(--secondary-accent)">[03] QUANT AGENT</span><br>
+                Risk Matrix<br>P/E, ROE, Debt
+            </div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;">
+                <span style="color:var(--secondary-accent)">[04] SYNTHESIS AGENT</span><br>
+                OpenRouter LLM<br>CANSLIM & Layman
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 5rem; color: var(--text-muted);">
+        <p>Enter a ticker in the top right to initialize the workflow sequence.</p>
+    </div>
+</div>
+
+<!-- Main Dashboard View -->
 <div class="dashboard" id="dashboard">
     <!-- Top Row: Overview & Layman's Synthesis -->
     <div class="panel company-header">
@@ -291,13 +432,15 @@
         const btn = document.getElementById('analyzeBtn');
         const loader = document.getElementById('loader');
         const dashboard = document.getElementById('dashboard');
+        const landing = document.getElementById('landingView');
 
         if (!company || !ticker) return;
 
         btn.disabled = true;
         btn.innerHTML = "PROCESSING...";
-        loader.style.display = 'block';
+        landing.style.display = 'none';
         dashboard.style.display = 'none';
+        loader.style.display = 'block';
 
         try {
             const res = await fetch(`/analyze?company=${encodeURIComponent(company)}&ticker=${encodeURIComponent(ticker)}`);
@@ -309,6 +452,7 @@
             dashboard.style.display = 'grid';
         } catch (err) {
             alert("Error: " + err.message);
+            landing.style.display = 'block';
         } finally {
             loader.style.display = 'none';
             btn.disabled = false;
