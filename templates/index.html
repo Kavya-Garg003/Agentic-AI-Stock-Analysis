@@ -3,671 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Analysis Dashboard</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <title>Agentic AI Stock Analysis | Premium Investor Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        :root {
+            --bg-color: #050505;
+            --surface-color: #121212;
+            --surface-color-light: #1e1e1e;
+            --primary-accent: #00ff88;
+            --primary-glow: rgba(0, 255, 136, 0.2);
+            --secondary-accent: #00b8ff;
+            --text-main: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --danger: #ff3366;
+            --warning: #ffcc00;
+            --border-color: #333;
+            --glass-bg: rgba(18, 18, 18, 0.6);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: var(--bg-color);
+            color: var(--text-main);
             min-height: 100vh;
-            color: #333;
-            overflow-x: hidden;
+            background-image: radial-gradient(circle at 15% 50%, var(--primary-glow), transparent 25%),
+                              radial-gradient(circle at 85% 30%, rgba(0, 184, 255, 0.1), transparent 25%);
+            background-attachment: fixed;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 2rem;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-
-        .search-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: slideInUp 1s ease-out 0.6s both;
-        }
-
-        .search-form {
+        header {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 600px;
-            margin: 0 auto;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .search-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
 
         .input-group {
-            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
+        label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
             font-weight: 600;
-            color: #555;
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        .input-group input:focus {
+        input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1.1rem;
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
+            transition: all 0.3s ease;
         }
 
-        .analyze-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        input:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-accent), #00cc6a);
+            color: #000;
             border: none;
-            padding: 18px 36px;
-            font-size: 18px;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
             font-weight: 600;
-            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px var(--primary-glow);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            display: none;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .analyze-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-
-        .analyze-btn:active {
-            transform: translateY(0);
-        }
-
-        .analyze-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        .results {
-            display: none;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card:hover::before {
+            opacity: 1;
         }
 
         .card-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #333;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-icon {
-            width: 24px;
-            height: 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-        }
-
-        .metric {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .metric:last-child {
-            border-bottom: none;
-        }
-
-        .metric-label {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-muted);
+            font-size: 1rem;
             font-weight: 500;
-            color: #666;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .metric-value {
+        .data-value {
+            font-size: 2rem;
             font-weight: 700;
-            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .chart-container {
+            grid-column: span 3;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            height: 400px;
         }
 
         .recommendation {
+            grid-column: span 3;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 184, 255, 0.1));
+            border: 1px solid var(--primary-accent);
             text-align: center;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 3rem;
         }
 
-        .recommendation-badge {
-            display: inline-block;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.5rem;
+        .rec-value {
+            font-size: 4rem;
+            font-family: 'Outfit', sans-serif;
             font-weight: 700;
-            margin-bottom: 20px;
+            color: var(--primary-accent);
+            text-shadow: 0 0 20px var(--primary-glow);
+            margin-bottom: 1rem;
+        }
+        
+        .score-display {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
         }
 
-        .buy {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
+        .score-item {
+            background: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
-        .hold {
-            background: linear-gradient(135deg, #FF9800, #F57C00);
-            color: white;
+        .loader {
+            display: none;
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--surface-color-light);
+            border-bottom-color: var(--primary-accent);
+            border-radius: 50%;
+            animation: rotation 1s linear infinite;
+            margin: 3rem auto;
         }
 
-        .sell {
-            background: linear-gradient(135deg, #f44336, #d32f2f);
-            color: white;
-        }
-
-        .confidence-bar {
-            width: 100%;
-            height: 12px;
-            background: #eee;
-            border-radius: 6px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-
-        .confidence-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 6px;
-            transition: width 2s ease-out;
-        }
-
-        .canslim-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .canslim-item {
-            text-align: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .canslim-item.active {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .canslim-letter {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .canslim-score {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-
-        .error {
-            background: #ffebee;
-            color: #c62828;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border-left: 4px solid #c62828;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideInUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes spin {
+        @keyframes rotation {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .search-section {
-                padding: 25px;
-            }
-            
-            .results-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .canslim-grid {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-            }
+        .error-msg {
+            color: var(--danger);
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
         }
+
+        /* Value Colors */
+        .positive { color: var(--primary-accent); }
+        .negative { color: var(--danger); }
+        .neutral { color: var(--warning); }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📈 Stock Analysis Dashboard</h1>
-            <p>Comprehensive CANSLIM & Fundamental Analysis Powered by AI</p>
+
+<div class="container">
+    <header>
+        <h1>Agentic AI Stock Analysis</h1>
+        <div style="color: var(--text-muted); font-size: 0.9rem;">Modern Investor View</div>
+    </header>
+
+    <div class="search-panel">
+        <div class="input-group">
+            <label>Company Name</label>
+            <input type="text" id="company" placeholder="e.g., Apple Inc." value="Apple Inc.">
         </div>
-
-        <div class="search-section">
-            <form class="search-form" id="analysisForm">
-                <div class="input-group">
-                    <label for="company">Company Name</label>
-                    <input type="text" id="company" name="company" placeholder="e.g., Apple Inc." required>
-                </div>
-                <div class="input-group">
-                    <label for="ticker">Stock Ticker</label>
-                    <input type="text" id="ticker" name="ticker" placeholder="e.g., AAPL" required>
-                </div>
-                <button type="submit" class="analyze-btn" id="analyzeBtn">
-                    🔍 Analyze Stock
-                </button>
-            </form>
+        <div class="input-group">
+            <label>Ticker Symbol</label>
+            <input type="text" id="ticker" placeholder="e.g., AAPL" value="AAPL">
         </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Analyzing stock data... This may take a few moments.</p>
-        </div>
-
-        <div class="results" id="results">
-            <div class="recommendation" id="recommendation">
-                <div class="recommendation-badge" id="recommendationBadge">BUY</div>
-                <h3 id="recommendationTitle">Investment Recommendation</h3>
-                <p id="recommendationReasoning">Strong fundamentals with positive growth outlook</p>
-                <div class="confidence-bar">
-                    <div class="confidence-fill" id="confidenceFill" style="width: 0%"></div>
-                </div>
-                <p>Confidence: <span id="confidenceText">85%</span></p>
-            </div>
-
-            <div class="results-grid">
-                <div class="card">
-                    <div class="card-title">
-                        <div class="card-icon"></div>
-                        💰 Valuation Metrics
-                    </div>
-                    <div id="valuationMetrics">
-                        <div class="metric">
-                            <span class="metric-label">P/E Ratio</span>
-                            <span class="metric-value" id="peRatio">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">P/B Ratio</span>
-                            <span class="metric-value" id="pbRatio">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">P/S Ratio</span>
-                            <span class="metric-value" id="psRatio">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">EV/EBITDA</span>
-                            <span class="metric-value" id="evEbitda">--</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">
-                        <div class="card-icon"></div>
-                        📊 Profitability
-                    </div>
-                    <div id="profitabilityMetrics">
-                        <div class="metric">
-                            <span class="metric-label">ROE</span>
-                            <span class="metric-value" id="roe">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">ROA</span>
-                            <span class="metric-value" id="roa">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Gross Margin</span>
-                            <span class="metric-value" id="grossMargin">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Net Margin</span>
-                            <span class="metric-value" id="netMargin">--</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">
-                        <div class="card-icon"></div>
-                        📈 Growth Metrics
-                    </div>
-                    <div id="growthMetrics">
-                        <div class="metric">
-                            <span class="metric-label">Earnings Growth</span>
-                            <span class="metric-value" id="earningsGrowth">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Revenue Growth</span>
-                            <span class="metric-value" id="revenueGrowth">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Quarterly Growth</span>
-                            <span class="metric-value" id="quarterlyGrowth">--</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-title">
-                        <div class="card-icon"></div>
-                        ⚖️ Risk Assessment
-                    </div>
-                    <div id="riskMetrics">
-                        <div class="metric">
-                            <span class="metric-label">Risk Level</span>
-                            <span class="metric-value" id="riskLevel">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Risk Score</span>
-                            <span class="metric-value" id="riskScore">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Beta</span>
-                            <span class="metric-value" id="beta">--</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" id="canslimCard">
-                <div class="card-title">
-                    <div class="card-icon"></div>
-                    🎯 CANSLIM Analysis
-                </div>
-                <p>Each letter represents a key investment criterion. Green indicates the criterion is met.</p>
-                <div class="canslim-grid" id="canslimGrid">
-                    <div class="canslim-item" data-letter="C">
-                        <div class="canslim-letter">C</div>
-                        <div class="canslim-score">Current Earnings</div>
-                    </div>
-                    <div class="canslim-item" data-letter="A">
-                        <div class="canslim-letter">A</div>
-                        <div class="canslim-score">Annual Earnings</div>
-                    </div>
-                    <div class="canslim-item" data-letter="N">
-                        <div class="canslim-letter">N</div>
-                        <div class="canslim-score">New Products</div>
-                    </div>
-                    <div class="canslim-item" data-letter="S">
-                        <div class="canslim-letter">S</div>
-                        <div class="canslim-score">Supply & Demand</div>
-                    </div>
-                    <div class="canslim-item" data-letter="L">
-                        <div class="canslim-letter">L</div>
-                        <div class="canslim-score">Leader</div>
-                    </div>
-                    <div class="canslim-item" data-letter="I">
-                        <div class="canslim-letter">I</div>
-                        <div class="canslim-score">Institutional</div>
-                    </div>
-                    <div class="canslim-item" data-letter="M">
-                        <div class="canslim-letter">M</div>
-                        <div class="canslim-score">Market Direction</div>
-                    </div>
-                </div>
-                <div class="metric" style="margin-top: 20px;">
-                    <span class="metric-label">CANSLIM Score</span>
-                    <span class="metric-value" id="canslimScore">--/7</span>
-                </div>
-            </div>
-        </div>
+        <button id="analyzeBtn" onclick="analyzeStock()">Analyze Asset</button>
     </div>
 
-    <script>
-        const form = document.getElementById('analysisForm');
-        const loading = document.getElementById('loading');
-        const results = document.getElementById('results');
-        const analyzeBtn = document.getElementById('analyzeBtn');
+    <div class="loader" id="loader"></div>
+    <div class="error-msg" id="errorMsg"></div>
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
+    <div class="dashboard" id="dashboard">
+        <div class="card recommendation">
+            <div class="card-title" style="justify-content: center;">AI INVESTMENT DECISION</div>
+            <div class="rec-value" id="finalDecision">BUY</div>
+            <div style="color: var(--text-main); font-size: 1.1rem;" id="reasoningText"></div>
+            <div class="score-display">
+                <div class="score-item">
+                    <div class="data-label">Total Score</div>
+                    <div class="data-value" id="totalScore" style="font-size: 1.5rem;">0/100</div>
+                </div>
+                <div class="score-item">
+                    <div class="data-label">Confidence</div>
+                    <div class="data-value" id="confidenceScore" style="font-size: 1.5rem;">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Fundamental Score</div>
+            <div class="data-value" id="fundScore">--</div>
+            <div class="data-label">P/E, ROE, Margins</div>
+        </div>
+        
+        <div class="card">
+            <div class="card-title">CANSLIM Rating</div>
+            <div class="data-value" id="canslimScore">--</div>
+            <div class="data-label">Growth & Momentum</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Market Sentiment</div>
+            <div class="data-value" id="sentimentScore">--</div>
+            <div class="data-label" id="sentimentClass">--</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Risk Assessment</div>
+            <div class="data-value" id="riskScore">--</div>
+            <div class="data-label">Volatility & Debt</div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentChart = null;
+
+    async function analyzeStock() {
+        const company = document.getElementById('company').value;
+        const ticker = document.getElementById('ticker').value;
+        const btn = document.getElementById('analyzeBtn');
+        const loader = document.getElementById('loader');
+        const dashboard = document.getElementById('dashboard');
+        const errorMsg = document.getElementById('errorMsg');
+
+        if (!company || !ticker) return;
+
+        btn.disabled = true;
+        btn.innerHTML = "Processing...";
+        loader.style.display = 'block';
+        dashboard.style.display = 'none';
+        errorMsg.style.display = 'none';
+
+        try {
+            const res = await fetch(`/analyze?company=${encodeURIComponent(company)}&ticker=${encodeURIComponent(ticker)}`);
+            const data = await res.json();
             
-            const company = document.getElementById('company').value.trim();
-            const ticker = document.getElementById('ticker').value.trim().toUpperCase();
-            
-            if (!company || !ticker) {
-                alert('Please fill in both company name and ticker symbol');
-                return;
+            if(data.error) {
+                throw new Error(data.error);
             }
 
-            // Show loading
-            loading.style.display = 'block';
-            results.style.display = 'none';
-            analyzeBtn.disabled = true;
-            analyzeBtn.textContent = 'Analyzing...';
+            populateDashboard(data);
+            
+            dashboard.style.display = 'grid';
+        } catch (err) {
+            errorMsg.innerText = "Error: " + err.message;
+            errorMsg.style.display = 'block';
+        } finally {
+            loader.style.display = 'none';
+            btn.disabled = false;
+            btn.innerHTML = "Analyze Asset";
+        }
+    }
 
-            try {
-                // Make API call to your Flask backend
-                const response = await fetch(`/analyze?company=${encodeURIComponent(company)}&ticker=${encodeURIComponent(ticker)}`);
-                const data = await response.json();
-                
-                if (response.ok) {
-                    displayResults(data);
-                } else {
-                    throw new Error(data.error || 'Analysis failed');
+    function populateDashboard(data) {
+        const results = data.analysis_results;
+        const dec = results.final_decision;
+        
+        const recValue = document.getElementById('finalDecision');
+        recValue.innerText = dec.recommendation;
+        if(dec.recommendation === 'BUY') {
+            recValue.style.color = 'var(--primary-accent)';
+            recValue.style.textShadow = '0 0 20px var(--primary-glow)';
+        } else if(dec.recommendation === 'SELL') {
+            recValue.style.color = 'var(--danger)';
+            recValue.style.textShadow = '0 0 20px rgba(255,51,102,0.3)';
+        } else {
+            recValue.style.color = 'var(--warning)';
+            recValue.style.textShadow = '0 0 20px rgba(255,204,0,0.3)';
+        }
+
+        document.getElementById('reasoningText').innerText = dec.reasoning;
+        document.getElementById('totalScore').innerText = `${dec.total_score.toFixed(1)}/100`;
+        document.getElementById('confidenceScore').innerText = `${(dec.confidence * 100).toFixed(1)}%`;
+
+        document.getElementById('fundScore').innerText = dec.decision_factors.fundamental_score.toFixed(1);
+        
+        let canslim = dec.decision_factors.canslim_score.toFixed(1);
+        if(results.canslim && results.canslim.total_score) {
+            canslim += ` (${results.canslim.total_score}/7)`;
+        }
+        document.getElementById('canslimScore').innerText = canslim;
+
+        document.getElementById('sentimentScore').innerText = dec.decision_factors.sentiment_score.toFixed(1);
+        document.getElementById('sentimentClass').innerText = results.sentiment.classification;
+
+        document.getElementById('riskScore').innerText = dec.decision_factors.risk_score.toFixed(1);
+
+        renderChart(data.chart_data);
+    }
+
+    function renderChart(chartData) {
+        if(!chartData || !chartData.dates) return;
+        
+        const ctx = document.getElementById('priceChart').getContext('2d');
+        if(currentChart) currentChart.destroy();
+
+        // Create gradient
+        let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.5)');
+        gradient.addColorStop(1, 'rgba(0, 255, 136, 0.0)');
+
+        currentChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData.dates,
+                datasets: [{
+                    label: 'Close Price',
+                    data: chartData.prices,
+                    borderColor: '#00ff88',
+                    borderWidth: 2,
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 0,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(18, 18, 18, 0.8)',
+                        titleColor: '#a0a0a0',
+                        bodyColor: '#fff',
+                        borderColor: '#333',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false, drawBorder: false },
+                        ticks: { color: '#a0a0a0', maxTicksLimit: 7 }
+                    },
+                    y: {
+                        grid: { color: '#333', drawBorder: false },
+                        ticks: { color: '#a0a0a0' }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                displayError('Failed to analyze stock. Please check if the Flask server is running and try again.');
-            } finally {
-                loading.style.display = 'none';
-                analyzeBtn.disabled = false;
-                analyzeBtn.textContent = '🔍 Analyze Stock';
             }
         });
+    }
+</script>
 
-        function displayResults(data) {
-            const analysisResults = data.analysis_results;
-            
-            // Display recommendation
-            if (analysisResults.final_decision) {
-                const decision = analysisResults.final_decision;
-                const badge = document.getElementById('recommendationBadge');
-                const reasoning = document.getElementById('recommendationReasoning');
-                const confidenceFill = document.getElementById('confidenceFill');
-                const confidenceText = document.getElementById('confidenceText');
-                
-                badge.textContent = decision.recommendation;
-                badge.className = `recommendation-badge ${decision.recommendation.toLowerCase()}`;
-                reasoning.textContent = decision.reasoning;
-                
-                const confidencePercent = Math.round(decision.confidence * 100);
-                confidenceFill.style.width = `${confidencePercent}%`;
-                confidenceText.textContent = `${confidencePercent}%`;
-            }
-
-            // Display fundamental metrics
-            if (analysisResults.fundamental) {
-                const fundamental = analysisResults.fundamental;
-                
-                // Valuation metrics
-                updateMetric('peRatio', fundamental.valuation?.pe_ratio);
-                updateMetric('pbRatio', fundamental.valuation?.pb_ratio);
-                updateMetric('psRatio', fundamental.valuation?.ps_ratio);
-                updateMetric('evEbitda', fundamental.valuation?.ev_ebitda);
-                
-                // Profitability metrics
-                updateMetric('roe', fundamental.profitability?.roe, '%');
-                updateMetric('roa', fundamental.profitability?.roa, '%');
-                updateMetric('grossMargin', fundamental.profitability?.gross_margin, '%');
-                updateMetric('netMargin', fundamental.profitability?.profit_margin, '%');
-                
-                // Growth metrics
-                updateMetric('earningsGrowth', fundamental.growth?.earnings_growth, '%');
-                updateMetric('revenueGrowth', fundamental.growth?.revenue_growth, '%');
-                updateMetric('quarterlyGrowth', fundamental.growth?.earnings_quarterly_growth, '%');
-            }
-
-            // Display risk metrics
-            if (analysisResults.risk) {
-                const risk = analysisResults.risk;
-                document.getElementById('riskLevel').textContent = risk.level || '--';
-                document.getElementById('riskScore').textContent = `${risk.score}/${risk.max_score}`;
-                
-                if (analysisResults.fundamental?.market?.beta) {
-                    updateMetric('beta', analysisResults.fundamental.market.beta);
-                }
-            }
-
-            // Display CANSLIM analysis
-            if (analysisResults.canslim) {
-                const canslim = analysisResults.canslim;
-                const canslimAnalysis = canslim.canslim_analysis;
-                
-                // Update CANSLIM score
-                document.getElementById('canslimScore').textContent = `${canslim.total_score}/7`;
-                
-                // Update individual CANSLIM items
-                Object.keys(canslimAnalysis).forEach(letter => {
-                    const item = document.querySelector(`[data-letter="${letter}"]`);
-                    if (item && canslimAnalysis[letter].score === 1) {
-                        item.classList.add('active');
-                    }
-                });
-            }
-
-            results.style.display = 'block';
-            results.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function updateMetric(elementId, value, suffix = '') {
-            const element = document.getElementById(elementId);
-            if (element) {
-                if (value !== null && value !== undefined) {
-                    let displayValue = value;
-                    if (suffix === '%' && typeof value === 'number') {
-                        displayValue = (value * 100).toFixed(1);
-                    } else if (typeof value === 'number') {
-                        displayValue = value.toFixed(2);
-                    }
-                    element.textContent = displayValue + suffix;
-                } else {
-                    element.textContent = 'N/A';
-                }
-            }
-        }
-
-        function displayError(message) {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error';
-            errorDiv.innerHTML = `<strong>Error:</strong> ${message}`;
-            
-            const container = document.querySelector('.container');
-            container.appendChild(errorDiv);
-            
-            setTimeout(() => {
-                errorDiv.remove();
-            }, 5000);
-        }
-
-        // Add some sample data for demonstration
-        document.getElementById('company').value = 'Apple Inc.';
-        document.getElementById('ticker').value = 'AAPL';
-    </script>
 </body>
 </html>
