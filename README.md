@@ -1,4 +1,4 @@
-#Agentic AI Stock Analysis
+# Agentic AI Stock Analysis
 
 Welcome to the **Agentic AI Stock Analysis** dashboard! This project provides a robust, multi-agent artificial intelligence framework to analyze stocks from a modern, high-level investor perspective. It leverages the latest data extraction methods, AI-powered CANSLIM evaluation, sentiment analysis, and risk assessment to provide clear, actionable investment decisions.
 
