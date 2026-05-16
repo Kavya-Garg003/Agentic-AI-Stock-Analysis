@@ -1,7 +1,7 @@
 {
   "company": "Apple Inc.",
   "ticker": "AAPL",
-  "analysis_date": "2026-05-16T20:20:37.343544",
+  "analysis_date": "2026-05-16T20:54:02.213753",
   "analysis_results": {
     "fundamental": {
       "valuation": {
@@ -31,46 +31,50 @@
       }
     },
     "canslim": {
-      "total_score": 6.5,
-      "summary": "Apple Inc. (AAPL) demonstrates strong fundamentals and market leadership, but its current price momentum and market conditions slightly weigh down its overall CANSLIM score.",
+      "total_score": 7.5,
+      "summary": "Apple Inc. (AAPL) shows strong performance in several CANSLIM criteria, particularly in earnings growth, institutional sponsorship, and market direction. However, it faces challenges in new products or services and supply chain constraints.",
       "canslim_analysis": {
         "C": {
           "score": 1,
-          "reasoning": "Apple has consistently shown strong earnings growth, with recent quarterly earnings exceeding expectations. Its profitability and return on equity are robust, reflecting a solid 'C' score."
+          "reasoning": "Apple has a strong current earnings growth, with consistent quarterly revenue and profit increases."
         },
         "A": {
           "score": 1,
-          "reasoning": "Apple's annual earnings growth has been impressive, driven by its diversified product portfolio and services revenue. The company has maintained a high growth rate, justifying a perfect 'A' score."
+          "reasoning": "Annual earnings growth is robust, driven by strong iPhone, Services, and Wearables segments."
         },
         "N": {
-          "score": 1,
-          "reasoning": "Apple continues to innovate with new products and services, such as the iPhone 15 and advancements in its ecosystem. Its ability to introduce new offerings supports a strong 'N' score."
+          "score": 0.5,
+          "reasoning": "While Apple innovates, recent product launches (e.g., iPhone 15) are evolutionary rather than revolutionary."
         },
         "S": {
           "score": 1,
-          "reasoning": "Apple dominates its industry with a significant market share in smartphones, tablets, and wearables. Its brand strength and customer loyalty contribute to a high 'S' score."
+          "reasoning": "Apple's stock is in high demand, with strong institutional ownership and liquidity."
         },
         "L": {
           "score": 1,
-          "reasoning": "Apple is a market leader and one of the most valuable companies globally. Its strong institutional support and liquidity make it a top-tier stock, earning a perfect 'L' score."
+          "reasoning": "Apple is a market leader in multiple segments, including smartphones, wearables, and services."
         },
         "I": {
           "score": 1,
-          "reasoning": "Apple's stock has shown resilience and upward momentum, supported by its strong fundamentals and investor confidence. This justifies a high 'I' score."
+          "reasoning": "Institutional sponsorship is strong, with high ownership by mutual funds and ETFs."
         },
         "M": {
-          "score": 0.5,
-          "reasoning": "The broader market has experienced volatility due to macroeconomic factors, which slightly impacts Apple's stock performance. This results in a reduced 'M' score."
+          "score": 1,
+          "reasoning": "The overall market is in a confirmed uptrend, favoring growth stocks like Apple."
         }
       }
     },
     "sentiment": {
-      "score": -0.1724416466659719,
+      "score": -0.17200772428408945,
       "classification": "Negative",
       "news_feed": [
         {
           "headline": "Zurcher Kantonalbank Zurich Cantonalbank Lowers Stake in Apple Inc. $AAPL - MarketBeat",
           "label": "negative"
+        },
+        {
+          "headline": "Apple Inc. | History, Products, Headquarters, & Facts - Tim Cook, Trillion Dollar, Tech Giant - Britannica",
+          "label": "neutral"
         },
         {
           "headline": "CCI shifts from global to domestic turnover in Apple investigation - Business Standard",
@@ -123,10 +127,6 @@
         {
           "headline": "Apple Inc. $AAPL Shares Acquired by Tred Avon Family Wealth LLC - MarketBeat",
           "label": "neutral"
-        },
-        {
-          "headline": "Emissary Wealth LLC Purchases Shares of 16,710 Apple Inc. $AAPL - MarketBeat",
-          "label": "neutral"
         }
       ]
     },
@@ -143,17 +143,17 @@
     },
     "final_decision": {
       "recommendation": "BUY",
-      "total_score": 78.56,
+      "total_score": 82.85,
       "max_score": 100,
-      "confidence": 0.786,
+      "confidence": 0.829,
       "decision_factors": {
         "fundamental_score": 40,
-        "canslim_score": 27.857142857142858,
-        "sentiment_score": 6.20668765000521,
+        "canslim_score": 32.14285714285714,
+        "sentiment_score": 6.20994206786933,
         "risk_score": 4.5
       },
-      "reasoning": "Total computed score is 78.56 out of 100. Fundamentals and sentiment align with a BUY rating.",
-      "layman_explanation": "We recommend BUYING Apple Inc. stock because its P/E ratio of 36.347458 indicates strong earnings potential, and despite recent negative news sentiment, its overall risk is low at 3/10, making it a stable investment."
+      "reasoning": "Total computed score is 82.85 out of 100. Fundamentals and sentiment align with a BUY rating.",
+      "layman_explanation": "Despite negative news sentiment, we recommend BUYING Apple Inc. stock due to its strong profitability reflected in a P/E ratio of 36.35 and a low risk rating of 3/10, signaling stability and growth potential."
     }
   },
   "company_profile": {

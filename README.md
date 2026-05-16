@@ -1,5 +1,7 @@
 # Agentic Stock Analysis Workflow Terminal
 
+![Agentic Stock Terminal Dashboard](assets/dashboard.png)
+
 Welcome to the **Agentic Stock Analysis Workflow** dashboard! 
 
 > **Important Distinction:** This project is built as a highly deterministic **Agentic AI Workflow**, rather than an open-ended autonomous agent. In institutional finance environments, true autonomous LLM agents (like Auto-GPT) can be unpredictable, slow, and prone to "hallucination loops." To meet professional standards, this tool uses a fixed, robust orchestrator that explicitly routes tasks to specialized sub-agents (Data Collection, FinBERT Sentiment, AI Synthesis, Risk Management). This guarantees fast, strictly formatted, and highly reliable institutional-grade reporting every single time.
@@ -9,10 +11,12 @@ This platform provides a robust, multi-agent artificial intelligence framework t
 ## 🌟 Key Features
 
 - **Agentic Workflow Architecture**: Modular design separating concerns into distinct agents (Data Collector, Fundamental Analyst, Sentiment Analyst, Risk Manager, CANSLIM, and Decision Engine), guided by a master Orchestrator.
+- **Deep AI Analyst Chatbot**: A real-time chat interface embedded directly into the dashboard. After the analysis is complete, you can ask the AI specific questions (e.g., "Why is the P/E ratio flagged as red?" or "Summarize the negative news headlines") and it will respond strictly based on the extracted data.
 - **LLM Synthesis**: Automatically translates complex quantitative metrics into non-technical, layman-readable explanations using advanced language models (via OpenRouter).
 - **Comprehensive Data Gathering**: Uses `yfinance` for robust stock market data and technical indicators (SMA), falling back gracefully when APIs are rate-limited.
 - **NLP Sentiment Analysis**: Employs FinBERT to gauge market sentiment based on recent headlines, tagging them positively or negatively.
-- **Bloomberg Terminal UI Dashboard**: A stunning, dark-themed, data-dense UI built with modern HTML/CSS and interactive Chart.js visualizations that mimics high-end financial terminals.
+- **Dynamic Action Loading Sequence**: While the agents work in the background, the UI displays real-time execution states (e.g., *Dispatching Data Collector Agent*, *Executing FinBERT NLP*).
+- **Google Finance x Bloomberg UI**: A stunning, data-dense UI built with modern HTML/CSS and interactive Chart.js visualizations. It merges the clean left-to-right flow of Google Finance with the dark, terminal aesthetic of professional institutional platforms.
 
 ## 🏗️ Project Structure
 
@@ -20,7 +24,7 @@ The codebase is organized into a robust Python application workflow:
 
 ```text
 .
-├── app.py                      # Main Flask application entry point
+├── app.py                      # Main Flask application entry point with /chat LLM backend
 ├── stock_analyzer/             # Core analysis package
 │   ├── orchestrator.py         # Main orchestrator linking all agents and generating synthesis
 │   ├── agents/                 # Specialized workflow agents
@@ -34,7 +38,7 @@ The codebase is organized into a robust Python application workflow:
 │       ├── fallback_data.py    # Fallback data generator
 │       └── persistence.py      # Saves analysis to stock_reports/
 ├── templates/                  
-│   └── index.html              # Premium Dark Mode Terminal UI
+│   └── index.html              # Premium Dark Mode Terminal UI & Chatbot
 └── stock_reports/              # Auto-generated analysis history and data dumps
 ```
 
@@ -45,14 +49,14 @@ The codebase is organized into a robust Python application workflow:
 Ensure you have Python 3.9+ installed. You'll need the following libraries:
 
 ```bash
-pip install flask yfinance feedparser pandas numpy transformers torch python-dotenv
+pip install flask yfinance feedparser pandas numpy transformers torch python-dotenv requests
 ```
 
 *(Note: `transformers` and `torch` are used by the FinBERT sentiment analyzer. If they fail to load, the app gracefully falls back to neutral sentiment).*
 
 ### Environment Variables
 
-Set your OpenRouter API key inside a `.env` file for advanced CANSLIM analysis and Layman Synthesis:
+Set your OpenRouter API key inside a `.env` file for advanced CANSLIM analysis, Layman Synthesis, and the Deep AI Chatbot:
 
 1. Create a `.env` file in the root directory.
 2. Add your key: `OPENROUTER_API_KEY=your-api-key-here`
@@ -67,6 +71,9 @@ Set your OpenRouter API key inside a `.env` file for advanced CANSLIM analysis a
    ```
    http://127.0.0.1:5000
    ```
+
+![System Architecture Landing Page](assets/landing.png)
+
 3. Enter a company name (e.g., *Apple Inc.*) and a ticker (e.g., *AAPL*) and click **EXECUTE**.
 
 ## 🎨 UI/UX Design Philosophy

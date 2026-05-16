@@ -82,10 +82,9 @@
         }
 
         button:hover { background: #00cc6a; }
-        
         button:disabled { background: #333; color: #888; cursor: not-allowed; }
 
-        /* Landing View Specifics */
+        /* Landing View */
         #landingView {
             max-width: 1200px;
             margin: 4rem auto;
@@ -156,24 +155,33 @@
             font-size: 2rem;
         }
 
-        /* Dashboard Specifics */
+        /* Dashboard View */
         .dashboard {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 1px;
-            background: var(--border-color);
-            padding: 1px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
             display: none;
-            min-height: calc(100vh - 70px);
+            grid-template-columns: 2.5fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .side-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         .panel {
             background: var(--surface-color);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 8px;
         }
 
         .panel-header {
@@ -186,26 +194,46 @@
             margin-bottom: 1rem;
         }
 
-        /* Top Section */
-        .company-header {
-            grid-column: span 2;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
+        /* Header / Google Finance Style */
+        .finance-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1rem;
         }
 
         .company-title {
             font-size: 2.5rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .company-ticker {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        .price-huge {
+            font-size: 4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            color: #fff;
         }
 
         .layman-box {
-            background: rgba(0, 184, 255, 0.1);
+            background: rgba(0, 184, 255, 0.05);
             border-left: 4px solid var(--secondary-accent);
-            padding: 1rem;
+            padding: 1.5rem;
             font-size: 1.1rem;
             line-height: 1.6;
+        }
+
+        .decision-huge {
+            font-size: 2.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-align: center;
         }
 
         /* Data Grids */
@@ -230,12 +258,12 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            max-height: 400px;
+            max-height: 300px;
             overflow-y: auto;
         }
 
         .news-item {
-            padding: 0.5rem;
+            padding: 0.75rem;
             border-left: 3px solid var(--border-color);
             background: var(--surface-color-light);
             font-size: 0.9rem;
@@ -247,26 +275,87 @@
 
         /* Chart */
         .chart-wrapper {
-            height: 350px;
+            height: 400px;
             width: 100%;
         }
 
-        /* Decision Box */
-        .decision-huge {
-            font-size: 4rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: bold;
-            text-align: center;
-            margin: 1rem 0;
+        /* Chatbot */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 400px;
+            background: var(--surface-color-light);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-msg {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            max-width: 85%;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .chat-user {
+            background: rgba(0, 184, 255, 0.1);
+            border: 1px solid var(--secondary-accent);
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .chat-ai {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary-accent);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid var(--border-color);
+            padding: 0.5rem;
+            background: var(--surface-color);
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            width: auto;
         }
 
         .loader {
             display: none;
-            color: var(--primary-accent);
-            font-family: 'JetBrains Mono', monospace;
             text-align: center;
             margin-top: 3rem;
-            font-size: 1.5rem;
+        }
+        
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--surface-color-light);
+            border-top: 3px solid var(--primary-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem auto;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .loader-text {
+            color: var(--primary-accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
         }
 
         .text-green { color: var(--primary-accent); }
@@ -289,158 +378,162 @@
     </div>
 </div>
 
-<div class="loader" id="loader">Executing Agentic Workflow. Synthesizing data packets... <span class="blink">_</span></div>
+<div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text" id="loaderText">Initializing Agentic Workflow...</div>
+</div>
 
-<!-- Landing / Architecture View -->
 <div id="landingView">
     <div class="landing-title">Institutional Agentic Workflow</div>
-    
     <div class="landing-text">
-        Welcome to the **Agentic Stock Analysis Terminal**. 
-        <br><br>
+        Welcome to the **Agentic Stock Analysis Terminal**. <br><br>
         In high-stakes institutional finance, true "Autonomous Agents" (which blindly loop, guess, and iterate) are a liability—they are unpredictable, prone to hallucinations, and unacceptably slow.
         <br><br>
         To meet modern professional standards, this system relies on an <strong>Agentic Workflow</strong>. A central Orchestrator dictates a strict, deterministic, and highly reliable pipeline. It dispatches precise tasks to specialized sub-agents (Data Collection, FinBERT NLP, Quantitative Risk, and LLM Synthesis) to guarantee absolute accuracy every single time.
     </div>
-
-    <div class="landing-highlight">
-        "Deterministic Orchestration. Absolute Transparency. Institutional Reliability."
-    </div>
+    <div class="landing-highlight">"Deterministic Orchestration. Absolute Transparency. Institutional Reliability."</div>
 
     <div class="arch-diagram">
         <div style="text-align: center; color: var(--text-muted);">SYSTEM ARCHITECTURE</div>
-        
         <div class="arch-row">
-            <div class="arch-node">
-                <span style="color:var(--text-muted); font-size:0.8rem">INPUT</span><br>
-                USER QUERY
-            </div>
+            <div class="arch-node"><span style="color:var(--text-muted); font-size:0.8rem">INPUT</span><br>USER QUERY</div>
             <div class="arch-arrow">→</div>
-            <div class="arch-node" style="border-color: #fff; color: #fff;">
-                <span style="color:var(--text-muted); font-size:0.8rem">CORE</span><br>
-                ORCHESTRATOR
-            </div>
+            <div class="arch-node" style="border-color: #fff; color: #fff;"><span style="color:var(--text-muted); font-size:0.8rem">CORE</span><br>ORCHESTRATOR</div>
             <div class="arch-arrow">→</div>
-            <div class="arch-node secondary">
-                <span style="color:var(--text-muted); font-size:0.8rem">OUTPUT</span><br>
-                TERMINAL UI
-            </div>
+            <div class="arch-node secondary"><span style="color:var(--text-muted); font-size:0.8rem">OUTPUT</span><br>TERMINAL UI</div>
         </div>
-
         <div style="display:flex; justify-content: center; gap: 4rem; margin-top: -1rem; margin-bottom: -1rem;">
             <div style="border-left: 2px dashed #444; height: 50px;"></div>
         </div>
-
         <div class="arch-row" style="flex-wrap: wrap; max-width: 900px; margin: 0 auto;">
-            <div class="arch-node secondary" style="font-size: 0.9rem;">
-                <span style="color:var(--secondary-accent)">[01] DATA AGENT</span><br>
-                YFinance API<br>Company Profiling
-            </div>
-            <div class="arch-node secondary" style="font-size: 0.9rem;">
-                <span style="color:var(--secondary-accent)">[02] NLP AGENT</span><br>
-                FinBERT Pipeline<br>News Sentiment
-            </div>
-            <div class="arch-node secondary" style="font-size: 0.9rem;">
-                <span style="color:var(--secondary-accent)">[03] QUANT AGENT</span><br>
-                Risk Matrix<br>P/E, ROE, Debt
-            </div>
-            <div class="arch-node secondary" style="font-size: 0.9rem;">
-                <span style="color:var(--secondary-accent)">[04] SYNTHESIS AGENT</span><br>
-                OpenRouter LLM<br>CANSLIM & Layman
-            </div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;"><span style="color:var(--secondary-accent)">[01] DATA AGENT</span><br>YFinance API<br>Company Profiling</div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;"><span style="color:var(--secondary-accent)">[02] NLP AGENT</span><br>FinBERT Pipeline<br>News Sentiment</div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;"><span style="color:var(--secondary-accent)">[03] QUANT AGENT</span><br>Risk Matrix<br>P/E, ROE, Debt</div>
+            <div class="arch-node secondary" style="font-size: 0.9rem;"><span style="color:var(--secondary-accent)">[04] SYNTHESIS AGENT</span><br>OpenRouter LLM<br>CANSLIM & Layman</div>
         </div>
-    </div>
-    
-    <div style="text-align: center; margin-top: 5rem; color: var(--text-muted);">
-        <p>Enter a ticker in the top right to initialize the workflow sequence.</p>
     </div>
 </div>
 
-<!-- Main Dashboard View -->
 <div class="dashboard" id="dashboard">
-    <!-- Top Row: Overview & Layman's Synthesis -->
-    <div class="panel company-header">
-        <div>
-            <div class="panel-header">Entity Profile</div>
-            <div class="company-title" id="compName">--</div>
-            <div style="color: var(--text-muted); margin-bottom: 1rem;">
-                Sector: <span id="compSector" style="color:#fff">--</span> | 
-                Industry: <span id="compInd" style="color:#fff">--</span> | 
-                CEO: <span id="compCEO" style="color:#fff">--</span>
+    <!-- Main Left Column -->
+    <div class="main-column">
+        <div class="panel">
+            <div class="finance-header">
+                <div>
+                    <div class="company-title" id="compName">--</div>
+                    <div class="company-ticker" id="compSector">--</div>
+                </div>
+                <div class="price-huge" id="compPrice">$0.00</div>
             </div>
-            <p id="compSummary" style="font-size: 0.9rem; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;"></p>
+            <div class="chart-wrapper">
+                <canvas id="priceChart"></canvas>
+            </div>
         </div>
-        <div style="display: flex; flex-direction: column; justify-content: center;">
+
+        <div class="panel">
             <div class="panel-header">Agentic AI Synthesis (Layman Translation)</div>
             <div class="layman-box" id="laymanText">--</div>
+            
+            <div class="panel-header" style="margin-top: 2rem;">Business Summary</div>
+            <p id="compSummary" style="font-size: 0.95rem; color: #ccc; line-height: 1.6;"></p>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">Deep AI Analyst Chatbot</div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Ask questions specifically about the generated report data for <span id="chatTickerName">the stock</span>.</p>
+            <div class="chat-container">
+                <div class="chat-messages" id="chatMsgs">
+                    <div class="chat-msg chat-ai">Hello! I am the Agentic Synthesis Bot. What would you like to know about the analysis report?</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="Ask why the P/E is bad, or summarize the news...">
+                    <button onclick="sendChat()" id="chatBtn">SEND</button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Middle Left: Technicals & Fundamentals -->
-    <div class="panel">
-        <div class="panel-header">Price Action & Chart</div>
-        <div class="chart-wrapper">
-            <canvas id="priceChart"></canvas>
-        </div>
-        <div class="panel-header" style="margin-top: 1rem;">Deep Fundamentals</div>
-        <div class="data-grid" id="fundGrid">
-            <!-- JS populated -->
-        </div>
-    </div>
-
-    <!-- Middle Right: Decision & Risk -->
-    <div class="panel">
-        <div class="panel-header">Final Engine Decision</div>
-        <div class="decision-huge" id="finalDecision">--</div>
-        <div class="data-grid" style="margin-bottom: 2rem;">
-            <div class="data-item"><span class="data-label">Total Confidence</span><span class="data-value" id="confScore">--</span></div>
-            <div class="data-item"><span class="data-label">Base Fundamental</span><span class="data-value" id="fundScore">--</span></div>
-            <div class="data-item"><span class="data-label">Sentiment Edge</span><span class="data-value" id="sentScore">--</span></div>
-            <div class="data-item"><span class="data-label">Risk Rating</span><span class="data-value" id="riskScore">--</span></div>
+    <!-- Right Side Column -->
+    <div class="side-column">
+        <div class="panel">
+            <div class="panel-header">Final Engine Decision</div>
+            <div class="decision-huge" id="finalDecision">--</div>
+            <div style="text-align: center; margin-bottom: 1.5rem; color: var(--text-muted);">
+                Confidence: <span id="confScore" style="color: #fff">--</span>
+            </div>
+            
+            <div class="data-grid">
+                <div class="data-item"><span class="data-label">Base Fundamental</span><span class="data-value" id="fundScore">--</span></div>
+                <div class="data-item"><span class="data-label">Sentiment Edge</span><span class="data-value" id="sentScore">--</span></div>
+                <div class="data-item"><span class="data-label">Risk Rating</span><span class="data-value" id="riskScore">--</span></div>
+            </div>
         </div>
 
-        <div class="panel-header">Risk Analysis</div>
-        <div class="data-grid" id="riskGrid">
-            <!-- JS populated -->
+        <div class="panel">
+            <div class="panel-header">Key Fundamentals</div>
+            <div class="data-grid" id="fundGrid">
+                <!-- JS populated -->
+            </div>
         </div>
-    </div>
 
-    <!-- Bottom Left: CANSLIM -->
-    <div class="panel">
-        <div class="panel-header">OpenRouter CANSLIM Breakdown</div>
-        <div id="canslimGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-            <!-- JS populated -->
+        <div class="panel">
+            <div class="panel-header">Risk Analysis</div>
+            <div class="data-grid" id="riskGrid">
+                <!-- JS populated -->
+            </div>
         </div>
-        <div id="canslimSummary" style="margin-top: 1rem; font-style: italic; color: var(--text-muted);"></div>
-    </div>
 
-    <!-- Bottom Right: NLP News Feed -->
-    <div class="panel">
-        <div class="panel-header">FinBERT NLP News Sentiment</div>
-        <div class="news-feed" id="newsFeed">
-            <!-- JS populated -->
+        <div class="panel">
+            <div class="panel-header">FinBERT NLP News Sentiment</div>
+            <div class="news-feed" id="newsFeed">
+                <!-- JS populated -->
+            </div>
         </div>
     </div>
 </div>
 
 <script>
     let currentChart = null;
+    let currentTicker = "";
+    let loadingInterval = null;
+
+    const loadingMessages = [
+        "Initializing Agentic Workflow...",
+        "Dispatching Data Collector Agent...",
+        "Fetching real-time market quotes and profile...",
+        "Running Quantitative Risk Matrix...",
+        "Evaluating Fundamentals (P/E, ROE, Debt)...",
+        "Executing FinBERT NLP on recent news headlines...",
+        "Calling OpenRouter LLM for CANSLIM analysis...",
+        "Synthesizing Layman Explanations via LLM...",
+        "Finalizing Institutional Report..."
+    ];
 
     async function analyzeStock() {
         const company = document.getElementById('company').value;
         const ticker = document.getElementById('ticker').value;
         const btn = document.getElementById('analyzeBtn');
         const loader = document.getElementById('loader');
+        const loaderText = document.getElementById('loaderText');
         const dashboard = document.getElementById('dashboard');
         const landing = document.getElementById('landingView');
 
         if (!company || !ticker) return;
 
+        currentTicker = ticker;
         btn.disabled = true;
-        btn.innerHTML = "PROCESSING...";
         landing.style.display = 'none';
         dashboard.style.display = 'none';
         loader.style.display = 'block';
+
+        // Start dynamic loading text
+        let msgIndex = 0;
+        loaderText.innerText = loadingMessages[0];
+        loadingInterval = setInterval(() => {
+            msgIndex++;
+            if(msgIndex >= loadingMessages.length) msgIndex = loadingMessages.length - 1;
+            loaderText.innerText = loadingMessages[msgIndex];
+        }, 1200);
 
         try {
             const res = await fetch(`/analyze?company=${encodeURIComponent(company)}&ticker=${encodeURIComponent(ticker)}`);
@@ -454,9 +547,9 @@
             alert("Error: " + err.message);
             landing.style.display = 'block';
         } finally {
+            clearInterval(loadingInterval);
             loader.style.display = 'none';
             btn.disabled = false;
-            btn.innerHTML = "EXECUTE";
         }
     }
 
@@ -466,12 +559,18 @@
         const prof = data.company_profile || {};
         const fund = res.fundamental || {};
 
-        // Profile
+        // Top Header
         document.getElementById('compName').innerText = `${data.company} (${data.ticker})`;
-        document.getElementById('compSector').innerText = prof.sector || '--';
-        document.getElementById('compInd').innerText = prof.industry || '--';
-        document.getElementById('compCEO').innerText = prof.ceo || '--';
+        document.getElementById('compSector').innerText = `${prof.sector || '--'} | ${prof.industry || '--'} | CEO: ${prof.ceo || '--'}`;
+        
+        let cPrice = fund.valuation?.currentPrice || fund.market?.currentPrice || 0;
+        if(cPrice === 0 && data.chart_data && data.chart_data.prices.length > 0) {
+            cPrice = data.chart_data.prices[data.chart_data.prices.length-1];
+        }
+        document.getElementById('compPrice').innerText = `$${cPrice.toFixed(2)}`;
+        
         document.getElementById('compSummary').innerText = prof.summary || '--';
+        document.getElementById('chatTickerName').innerText = data.ticker;
 
         // Layman Synthesis
         document.getElementById('laymanText').innerText = dec.layman_explanation || dec.reasoning;
@@ -481,21 +580,21 @@
         fdObj.innerText = dec.recommendation;
         fdObj.className = `decision-huge ${dec.recommendation === 'BUY' ? 'text-green' : dec.recommendation === 'SELL' ? 'text-red' : 'text-yellow'}`;
 
-        document.getElementById('confScore').innerText = `${dec.total_score.toFixed(1)}/100`;
+        document.getElementById('confScore').innerText = `${(dec.confidence*100).toFixed(1)}%`;
         document.getElementById('fundScore').innerText = dec.decision_factors.fundamental_score.toFixed(1);
         document.getElementById('sentScore').innerText = dec.decision_factors.sentiment_score.toFixed(1);
         document.getElementById('riskScore').innerText = dec.decision_factors.risk_score.toFixed(1);
 
-        // Fundamentals (Format with color logic if good/bad)
+        // Fundamentals
         const fpe = fund.valuation?.pe_ratio || 0;
         const froe = (fund.profitability?.roe || 0) * 100;
         document.getElementById('fundGrid').innerHTML = `
             <div class="data-item"><span class="data-label">Market Cap</span><span class="data-value">$${((fund.market?.market_cap||0)/1e9).toFixed(2)}B</span></div>
             <div class="data-item"><span class="data-label">P/E Ratio</span><span class="data-value ${fpe > 40 ? 'text-red' : fpe < 25 ? 'text-green' : 'text-yellow'}">${fpe.toFixed(2)}</span></div>
             <div class="data-item"><span class="data-label">ROE</span><span class="data-value ${froe > 15 ? 'text-green' : 'text-red'}">${froe.toFixed(2)}%</span></div>
-            <div class="data-item"><span class="data-label">Debt/Equity</span><span class="data-value">${(fund.leverage?.debt_to_equity||0).toFixed(2)}</span></div>
-            <div class="data-item"><span class="data-label">Qtrly Earnings Grwth</span><span class="data-value text-green">${((fund.growth?.earnings_quarterly_growth||0)*100).toFixed(2)}%</span></div>
-            <div class="data-item"><span class="data-label">Inst Ownership</span><span class="data-value">${((fund.market?.institutional_ownership||0)*100).toFixed(2)}%</span></div>
+            <div class="data-item"><span class="data-label">Debt/Eq Ratio</span><span class="data-value">${(fund.leverage?.debt_to_equity||0).toFixed(2)}</span></div>
+            <div class="data-item"><span class="data-label">Qtr EPS Grwth</span><span class="data-value text-green">${((fund.growth?.earnings_quarterly_growth||0)*100).toFixed(2)}%</span></div>
+            <div class="data-item"><span class="data-label">Inst Own</span><span class="data-value">${((fund.market?.institutional_ownership||0)*100).toFixed(2)}%</span></div>
         `;
 
         // Risk
@@ -518,25 +617,6 @@
         if(nFeed.length === 0) nHTML = '<div class="news-item">No news available</div>';
         document.getElementById('newsFeed').innerHTML = nHTML;
 
-        // CANSLIM
-        const cDiv = document.getElementById('canslimGrid');
-        cDiv.innerHTML = '';
-        if(res.canslim) {
-            const cAnalysis = res.canslim.CANSLIM_Analysis || res.canslim.canslim_analysis || {};
-            for(const [key, val] of Object.entries(cAnalysis)) {
-                if(key !== 'Total_Score' && key !== 'Summary' && key !== 'total_score' && key !== 'summary') {
-                    const sc = val.Score !== undefined ? val.Score : val.score;
-                    const comment = val.Comment || val.reasoning || "";
-                    cDiv.innerHTML += `
-                        <div style="background: var(--surface-color-light); padding: 0.5rem; border-left: 2px solid ${sc > 0.5 ? 'var(--primary-accent)' : 'var(--danger)'};">
-                            <strong style="color:var(--secondary-accent)">[${key}]</strong> ${comment}
-                        </div>
-                    `;
-                }
-            }
-            document.getElementById('canslimSummary').innerText = cAnalysis.Summary || cAnalysis.summary || '';
-        }
-
         renderChart(data.chart_data);
     }
 
@@ -553,9 +633,11 @@
                     label: 'Close Price',
                     data: chartData.prices,
                     borderColor: '#00ff88',
-                    borderWidth: 2,
+                    borderWidth: 3,
                     pointRadius: 0,
-                    tension: 0.1
+                    tension: 0.1,
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                    fill: true
                 }]
             },
             options: {
@@ -569,6 +651,49 @@
             }
         });
     }
+
+    // Chatbot Logic
+    async function sendChat() {
+        const input = document.getElementById('chatInput');
+        const q = input.value.trim();
+        if(!q || !currentTicker) return;
+
+        const chatMsgs = document.getElementById('chatMsgs');
+        
+        // Add User message
+        chatMsgs.innerHTML += `<div class="chat-msg chat-user">${q}</div>`;
+        input.value = '';
+        chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+        // Add loading bot
+        const loaderId = 'loader_' + Date.now();
+        chatMsgs.innerHTML += `<div class="chat-msg chat-ai" id="${loaderId}">Thinking...</div>`;
+        chatMsgs.scrollTop = chatMsgs.scrollHeight;
+
+        const btn = document.getElementById('chatBtn');
+        btn.disabled = true;
+
+        try {
+            const res = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ticker: currentTicker, question: q })
+            });
+            const data = await res.json();
+            
+            document.getElementById(loaderId).innerText = data.answer || data.error;
+        } catch(err) {
+            document.getElementById(loaderId).innerText = "Error reaching AI: " + err.message;
+        } finally {
+            btn.disabled = false;
+            chatMsgs.scrollTop = chatMsgs.scrollHeight;
+        }
+    }
+
+    // Allow Enter key for chat
+    document.getElementById('chatInput').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') sendChat();
+    });
 </script>
 </body>
 </html>
