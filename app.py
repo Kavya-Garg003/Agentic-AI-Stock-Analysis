@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 from stock_analyzer.orchestrator import StockAnalysisOrchestrator
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 API_KEY = os.getenv("OPENROUTER_API_KEY", "")

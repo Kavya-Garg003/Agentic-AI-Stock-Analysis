@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agentic AI Stock Analysis | Premium Investor Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Agentic AI | Bloomberg Terminal View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --bg-color: #050505;
-            --surface-color: #121212;
-            --surface-color-light: #1e1e1e;
+            --bg-color: #000000;
+            --surface-color: #0c0c0c;
+            --surface-color-light: #181818;
             --primary-accent: #00ff88;
-            --primary-glow: rgba(0, 255, 136, 0.2);
+            --primary-glow: rgba(0, 255, 136, 0.1);
             --secondary-accent: #00b8ff;
-            --text-main: #f5f5f5;
-            --text-muted: #a0a0a0;
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
             --danger: #ff3366;
             --warning: #ffcc00;
-            --border-color: #333;
-            --glass-bg: rgba(18, 18, 18, 0.6);
+            --border-color: #222;
         }
 
         * {
@@ -33,298 +32,252 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             min-height: 100vh;
-            background-image: radial-gradient(circle at 15% 50%, var(--primary-glow), transparent 25%),
-                              radial-gradient(circle at 85% 30%, rgba(0, 184, 255, 0.1), transparent 25%);
-            background-attachment: fixed;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        header {
+        .terminal-header {
+            background: var(--surface-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
         }
 
         h1 {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--primary-accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .search-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
             display: flex;
             gap: 1rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
-
-        .input-group {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        label {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-muted);
-            font-weight: 600;
         }
 
         input {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--surface-color-light);
             border: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.5rem 1rem;
             color: var(--text-main);
-            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
             outline: none;
-            transition: all 0.3s ease;
         }
 
         input:focus {
             border-color: var(--primary-accent);
-            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         button {
-            background: linear-gradient(135deg, var(--primary-accent), #00cc6a);
+            background: var(--primary-accent);
             color: #000;
             border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px var(--primary-glow);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
+        button:hover { background: #00cc6a; }
 
         .dashboard {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1.5rem;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto auto;
+            gap: 1px;
+            background: var(--border-color);
+            padding: 1px;
             display: none;
+            min-height: calc(100vh - 70px);
         }
 
-        .card {
+        .panel {
             background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
             padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-accent), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .card:hover::before {
-            opacity: 1;
-        }
-
-        .card-title {
-            font-family: 'Outfit', sans-serif;
+        .panel-header {
+            font-family: 'JetBrains Mono', monospace;
             color: var(--text-muted);
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
             margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .data-value {
-            font-size: 2rem;
+        /* Top Section */
+        .company-header {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .company-title {
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        .data-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
+        .layman-box {
+            background: rgba(0, 184, 255, 0.1);
+            border-left: 4px solid var(--secondary-accent);
+            padding: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
         }
 
-        .chart-container {
-            grid-column: span 3;
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            height: 400px;
+        /* Data Grids */
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        .recommendation {
-            grid-column: span 3;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 184, 255, 0.1));
-            border: 1px solid var(--primary-accent);
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .rec-value {
-            font-size: 4rem;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            color: var(--primary-accent);
-            text-shadow: 0 0 20px var(--primary-glow);
-            margin-bottom: 1rem;
-        }
-        
-        .score-display {
+        .data-item {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1rem;
+            justify-content: space-between;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.25rem;
         }
 
-        .score-item {
-            background: rgba(0,0,0,0.5);
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+        .data-label { color: var(--text-muted); }
+        .data-value { font-family: 'JetBrains Mono', monospace; font-weight: bold; }
+
+        /* News Feed */
+        .news-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .news-item {
+            padding: 0.5rem;
+            border-left: 3px solid var(--border-color);
+            background: var(--surface-color-light);
+            font-size: 0.9rem;
+        }
+
+        .news-item.POSITIVE { border-color: var(--primary-accent); }
+        .news-item.NEGATIVE { border-color: var(--danger); }
+        .news-item.NEUTRAL { border-color: var(--warning); }
+
+        /* Chart */
+        .chart-wrapper {
+            height: 350px;
+            width: 100%;
+        }
+
+        /* Decision Box */
+        .decision-huge {
+            font-size: 4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            text-align: center;
+            margin: 1rem 0;
         }
 
         .loader {
             display: none;
-            width: 48px;
-            height: 48px;
-            border: 5px solid var(--surface-color-light);
-            border-bottom-color: var(--primary-accent);
-            border-radius: 50%;
-            animation: rotation 1s linear infinite;
-            margin: 3rem auto;
-        }
-
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error-msg {
-            color: var(--danger);
+            color: var(--primary-accent);
+            font-family: 'JetBrains Mono', monospace;
             text-align: center;
-            margin-top: 1rem;
-            display: none;
+            margin-top: 3rem;
+            font-size: 1.5rem;
         }
 
-        /* Value Colors */
-        .positive { color: var(--primary-accent); }
-        .negative { color: var(--danger); }
-        .neutral { color: var(--warning); }
+        .text-green { color: var(--primary-accent); }
+        .text-red { color: var(--danger); }
+        .text-yellow { color: var(--warning); }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--surface-color); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>Agentic AI Stock Analysis</h1>
-        <div style="color: var(--text-muted); font-size: 0.9rem;">Modern Investor View</div>
-    </header>
-
+<div class="terminal-header">
+    <h1>AGENTIC_AI // TERMINAL</h1>
     <div class="search-panel">
-        <div class="input-group">
-            <label>Company Name</label>
-            <input type="text" id="company" placeholder="e.g., Apple Inc." value="Apple Inc.">
+        <input type="text" id="company" placeholder="COMPANY (e.g. Apple Inc.)" value="Apple Inc.">
+        <input type="text" id="ticker" placeholder="TICKER (e.g. AAPL)" value="AAPL">
+        <button id="analyzeBtn" onclick="analyzeStock()">EXECUTE</button>
+    </div>
+</div>
+
+<div class="loader" id="loader">Fetching agentic data & synthesizing... <span class="blink">_</span></div>
+
+<div class="dashboard" id="dashboard">
+    <!-- Top Row: Overview & Layman's Synthesis -->
+    <div class="panel company-header">
+        <div>
+            <div class="panel-header">Entity Profile</div>
+            <div class="company-title" id="compName">--</div>
+            <div style="color: var(--text-muted); margin-bottom: 1rem;">
+                Sector: <span id="compSector" style="color:#fff">--</span> | 
+                Industry: <span id="compInd" style="color:#fff">--</span> | 
+                CEO: <span id="compCEO" style="color:#fff">--</span>
+            </div>
+            <p id="compSummary" style="font-size: 0.9rem; color: #aaa; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;"></p>
         </div>
-        <div class="input-group">
-            <label>Ticker Symbol</label>
-            <input type="text" id="ticker" placeholder="e.g., AAPL" value="AAPL">
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="panel-header">Agentic AI Synthesis (Layman Translation)</div>
+            <div class="layman-box" id="laymanText">--</div>
         </div>
-        <button id="analyzeBtn" onclick="analyzeStock()">Analyze Asset</button>
     </div>
 
-    <div class="loader" id="loader"></div>
-    <div class="error-msg" id="errorMsg"></div>
-
-    <div class="dashboard" id="dashboard">
-        <div class="card recommendation">
-            <div class="card-title" style="justify-content: center;">AI INVESTMENT DECISION</div>
-            <div class="rec-value" id="finalDecision">BUY</div>
-            <div style="color: var(--text-main); font-size: 1.1rem;" id="reasoningText"></div>
-            <div class="score-display">
-                <div class="score-item">
-                    <div class="data-label">Total Score</div>
-                    <div class="data-value" id="totalScore" style="font-size: 1.5rem;">0/100</div>
-                </div>
-                <div class="score-item">
-                    <div class="data-label">Confidence</div>
-                    <div class="data-value" id="confidenceScore" style="font-size: 1.5rem;">0%</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">Fundamental Score</div>
-            <div class="data-value" id="fundScore">--</div>
-            <div class="data-label">P/E, ROE, Margins</div>
-        </div>
-        
-        <div class="card">
-            <div class="card-title">CANSLIM Rating</div>
-            <div class="data-value" id="canslimScore">--</div>
-            <div class="data-label">Growth & Momentum</div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">Market Sentiment</div>
-            <div class="data-value" id="sentimentScore">--</div>
-            <div class="data-label" id="sentimentClass">--</div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">Risk Assessment</div>
-            <div class="data-value" id="riskScore">--</div>
-            <div class="data-label">Volatility & Debt</div>
-        </div>
-
-        <div class="chart-container">
+    <!-- Middle Left: Technicals & Fundamentals -->
+    <div class="panel">
+        <div class="panel-header">Price Action & Chart</div>
+        <div class="chart-wrapper">
             <canvas id="priceChart"></canvas>
+        </div>
+        <div class="panel-header" style="margin-top: 1rem;">Deep Fundamentals</div>
+        <div class="data-grid" id="fundGrid">
+            <!-- JS populated -->
+        </div>
+    </div>
+
+    <!-- Middle Right: Decision & Risk -->
+    <div class="panel">
+        <div class="panel-header">Final Engine Decision</div>
+        <div class="decision-huge" id="finalDecision">--</div>
+        <div class="data-grid" style="margin-bottom: 2rem;">
+            <div class="data-item"><span class="data-label">Total Confidence</span><span class="data-value" id="confScore">--</span></div>
+            <div class="data-item"><span class="data-label">Base Fundamental</span><span class="data-value" id="fundScore">--</span></div>
+            <div class="data-item"><span class="data-label">Sentiment Edge</span><span class="data-value" id="sentScore">--</span></div>
+            <div class="data-item"><span class="data-label">Risk Rating</span><span class="data-value" id="riskScore">--</span></div>
+        </div>
+
+        <div class="panel-header">Risk Analysis</div>
+        <div class="data-grid" id="riskGrid">
+            <!-- JS populated -->
+        </div>
+    </div>
+
+    <!-- Bottom Left: CANSLIM -->
+    <div class="panel">
+        <div class="panel-header">OpenRouter CANSLIM Breakdown</div>
+        <div id="canslimGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <!-- JS populated -->
+        </div>
+        <div id="canslimSummary" style="margin-top: 1rem; font-style: italic; color: var(--text-muted);"></div>
+    </div>
+
+    <!-- Bottom Right: NLP News Feed -->
+    <div class="panel">
+        <div class="panel-header">FinBERT NLP News Sentiment</div>
+        <div class="news-feed" id="newsFeed">
+            <!-- JS populated -->
         </div>
     </div>
 </div>
@@ -338,84 +291,115 @@
         const btn = document.getElementById('analyzeBtn');
         const loader = document.getElementById('loader');
         const dashboard = document.getElementById('dashboard');
-        const errorMsg = document.getElementById('errorMsg');
 
         if (!company || !ticker) return;
 
         btn.disabled = true;
-        btn.innerHTML = "Processing...";
+        btn.innerHTML = "PROCESSING...";
         loader.style.display = 'block';
         dashboard.style.display = 'none';
-        errorMsg.style.display = 'none';
 
         try {
             const res = await fetch(`/analyze?company=${encodeURIComponent(company)}&ticker=${encodeURIComponent(ticker)}`);
             const data = await res.json();
             
-            if(data.error) {
-                throw new Error(data.error);
-            }
+            if(data.error) throw new Error(data.error);
 
             populateDashboard(data);
-            
             dashboard.style.display = 'grid';
         } catch (err) {
-            errorMsg.innerText = "Error: " + err.message;
-            errorMsg.style.display = 'block';
+            alert("Error: " + err.message);
         } finally {
             loader.style.display = 'none';
             btn.disabled = false;
-            btn.innerHTML = "Analyze Asset";
+            btn.innerHTML = "EXECUTE";
         }
     }
 
     function populateDashboard(data) {
-        const results = data.analysis_results;
-        const dec = results.final_decision;
-        
-        const recValue = document.getElementById('finalDecision');
-        recValue.innerText = dec.recommendation;
-        if(dec.recommendation === 'BUY') {
-            recValue.style.color = 'var(--primary-accent)';
-            recValue.style.textShadow = '0 0 20px var(--primary-glow)';
-        } else if(dec.recommendation === 'SELL') {
-            recValue.style.color = 'var(--danger)';
-            recValue.style.textShadow = '0 0 20px rgba(255,51,102,0.3)';
-        } else {
-            recValue.style.color = 'var(--warning)';
-            recValue.style.textShadow = '0 0 20px rgba(255,204,0,0.3)';
-        }
+        const res = data.analysis_results;
+        const dec = res.final_decision;
+        const prof = data.company_profile || {};
+        const fund = res.fundamental || {};
 
-        document.getElementById('reasoningText').innerText = dec.reasoning;
-        document.getElementById('totalScore').innerText = `${dec.total_score.toFixed(1)}/100`;
-        document.getElementById('confidenceScore').innerText = `${(dec.confidence * 100).toFixed(1)}%`;
+        // Profile
+        document.getElementById('compName').innerText = `${data.company} (${data.ticker})`;
+        document.getElementById('compSector').innerText = prof.sector || '--';
+        document.getElementById('compInd').innerText = prof.industry || '--';
+        document.getElementById('compCEO').innerText = prof.ceo || '--';
+        document.getElementById('compSummary').innerText = prof.summary || '--';
 
+        // Layman Synthesis
+        document.getElementById('laymanText').innerText = dec.layman_explanation || dec.reasoning;
+
+        // Decision
+        const fdObj = document.getElementById('finalDecision');
+        fdObj.innerText = dec.recommendation;
+        fdObj.className = `decision-huge ${dec.recommendation === 'BUY' ? 'text-green' : dec.recommendation === 'SELL' ? 'text-red' : 'text-yellow'}`;
+
+        document.getElementById('confScore').innerText = `${dec.total_score.toFixed(1)}/100`;
         document.getElementById('fundScore').innerText = dec.decision_factors.fundamental_score.toFixed(1);
-        
-        let canslim = dec.decision_factors.canslim_score.toFixed(1);
-        if(results.canslim && results.canslim.total_score) {
-            canslim += ` (${results.canslim.total_score}/7)`;
-        }
-        document.getElementById('canslimScore').innerText = canslim;
-
-        document.getElementById('sentimentScore').innerText = dec.decision_factors.sentiment_score.toFixed(1);
-        document.getElementById('sentimentClass').innerText = results.sentiment.classification;
-
+        document.getElementById('sentScore').innerText = dec.decision_factors.sentiment_score.toFixed(1);
         document.getElementById('riskScore').innerText = dec.decision_factors.risk_score.toFixed(1);
+
+        // Fundamentals (Format with color logic if good/bad)
+        const fpe = fund.valuation?.pe_ratio || 0;
+        const froe = (fund.profitability?.roe || 0) * 100;
+        document.getElementById('fundGrid').innerHTML = `
+            <div class="data-item"><span class="data-label">Market Cap</span><span class="data-value">$${((fund.market?.market_cap||0)/1e9).toFixed(2)}B</span></div>
+            <div class="data-item"><span class="data-label">P/E Ratio</span><span class="data-value ${fpe > 40 ? 'text-red' : fpe < 25 ? 'text-green' : 'text-yellow'}">${fpe.toFixed(2)}</span></div>
+            <div class="data-item"><span class="data-label">ROE</span><span class="data-value ${froe > 15 ? 'text-green' : 'text-red'}">${froe.toFixed(2)}%</span></div>
+            <div class="data-item"><span class="data-label">Debt/Equity</span><span class="data-value">${(fund.leverage?.debt_to_equity||0).toFixed(2)}</span></div>
+            <div class="data-item"><span class="data-label">Qtrly Earnings Grwth</span><span class="data-value text-green">${((fund.growth?.earnings_quarterly_growth||0)*100).toFixed(2)}%</span></div>
+            <div class="data-item"><span class="data-label">Inst Ownership</span><span class="data-value">${((fund.market?.institutional_ownership||0)*100).toFixed(2)}%</span></div>
+        `;
+
+        // Risk
+        const riskF = res.risk?.factors || {};
+        let rHTML = '';
+        for(const [k, v] of Object.entries(riskF)) {
+            let color = 'text-main';
+            if(['Strong','Low','Good','Positive'].includes(v)) color = 'text-green';
+            if(['High','Weak','Poor','Negative'].includes(v)) color = 'text-red';
+            rHTML += `<div class="data-item"><span class="data-label">${k.replace('_',' ').toUpperCase()}</span><span class="data-value ${color}">${v}</span></div>`;
+        }
+        document.getElementById('riskGrid').innerHTML = rHTML;
+
+        // News
+        const nFeed = res.sentiment?.news_feed || [];
+        let nHTML = '';
+        nFeed.forEach(n => {
+            nHTML += `<div class="news-item ${n.label}">${n.headline} <span style="font-size:0.75rem; opacity:0.7">(${n.label})</span></div>`;
+        });
+        if(nFeed.length === 0) nHTML = '<div class="news-item">No news available</div>';
+        document.getElementById('newsFeed').innerHTML = nHTML;
+
+        // CANSLIM
+        const cDiv = document.getElementById('canslimGrid');
+        cDiv.innerHTML = '';
+        if(res.canslim) {
+            const cAnalysis = res.canslim.CANSLIM_Analysis || res.canslim.canslim_analysis || {};
+            for(const [key, val] of Object.entries(cAnalysis)) {
+                if(key !== 'Total_Score' && key !== 'Summary' && key !== 'total_score' && key !== 'summary') {
+                    const sc = val.Score !== undefined ? val.Score : val.score;
+                    const comment = val.Comment || val.reasoning || "";
+                    cDiv.innerHTML += `
+                        <div style="background: var(--surface-color-light); padding: 0.5rem; border-left: 2px solid ${sc > 0.5 ? 'var(--primary-accent)' : 'var(--danger)'};">
+                            <strong style="color:var(--secondary-accent)">[${key}]</strong> ${comment}
+                        </div>
+                    `;
+                }
+            }
+            document.getElementById('canslimSummary').innerText = cAnalysis.Summary || cAnalysis.summary || '';
+        }
 
         renderChart(data.chart_data);
     }
 
     function renderChart(chartData) {
         if(!chartData || !chartData.dates) return;
-        
         const ctx = document.getElementById('priceChart').getContext('2d');
         if(currentChart) currentChart.destroy();
-
-        // Create gradient
-        let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(0, 255, 136, 0.5)');
-        gradient.addColorStop(1, 'rgba(0, 255, 136, 0.0)');
 
         currentChart = new Chart(ctx, {
             type: 'line',
@@ -426,47 +410,21 @@
                     data: chartData.prices,
                     borderColor: '#00ff88',
                     borderWidth: 2,
-                    backgroundColor: gradient,
-                    fill: true,
-                    tension: 0.4,
                     pointRadius: 0,
-                    pointHoverRadius: 6
+                    tension: 0.1
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        backgroundColor: 'rgba(18, 18, 18, 0.8)',
-                        titleColor: '#a0a0a0',
-                        bodyColor: '#fff',
-                        borderColor: '#333',
-                        borderWidth: 1
-                    }
-                },
+                plugins: { legend: { display: false } },
                 scales: {
-                    x: {
-                        grid: { display: false, drawBorder: false },
-                        ticks: { color: '#a0a0a0', maxTicksLimit: 7 }
-                    },
-                    y: {
-                        grid: { color: '#333', drawBorder: false },
-                        ticks: { color: '#a0a0a0' }
-                    }
-                },
-                interaction: {
-                    mode: 'nearest',
-                    axis: 'x',
-                    intersect: false
+                    x: { grid: { color: '#222' }, ticks: { color: '#888', maxTicksLimit: 5 } },
+                    y: { grid: { color: '#222' }, ticks: { color: '#888' } }
                 }
             }
         });
     }
 </script>
-
 </body>
 </html>

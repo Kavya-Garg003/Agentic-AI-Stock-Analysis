@@ -10,7 +10,22 @@ class CANSLIMAnalyzer:
         if not self.api_key or self.api_key.startswith("sk-or-v1-8fa"):
             return self._fallback_canslim_analysis(financials, price_history, market_history, news_headlines)
         
-        prompt = f"Analyze {company} ({ticker}) using CANSLIM methodology. Provide score out of 7. Respond in strict JSON. ..."
+        prompt = f"""Analyze {company} ({ticker}) using CANSLIM methodology based on its current market data. Provide a detailed score.
+Respond in strict JSON format EXACTLY like this:
+{{
+  "total_score": 6.5,
+  "summary": "Detailed explanation...",
+  "canslim_analysis": {{
+    "C": {{"score": 1, "reasoning": "..."}},
+    "A": {{"score": 1, "reasoning": "..."}},
+    "N": {{"score": 1, "reasoning": "..."}},
+    "S": {{"score": 1, "reasoning": "..."}},
+    "L": {{"score": 1, "reasoning": "..."}},
+    "I": {{"score": 1, "reasoning": "..."}},
+    "M": {{"score": 0.5, "reasoning": "..."}}
+  }}
+}}
+"""
         try:
             headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
             payload = {"model": "deepseek/deepseek-chat", "messages": [{"role": "user", "content": prompt}], "temperature": 0.3}

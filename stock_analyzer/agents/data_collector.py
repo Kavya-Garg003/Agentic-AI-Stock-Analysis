@@ -27,6 +27,25 @@ class DataCollectorAgent:
             except:
                 return ["No news available."]
 
+    def fetch_company_profile(self):
+        try:
+            stock = yf.Ticker(self.ticker)
+            info = stock.info
+            company_officers = info.get('companyOfficers', [])
+            ceo = "Unknown"
+            if company_officers and len(company_officers) > 0:
+                ceo = company_officers[0].get('name', "Unknown")
+            
+            return {
+                'sector': info.get('sector', 'N/A'),
+                'industry': info.get('industry', 'N/A'),
+                'ceo': ceo,
+                'website': info.get('website', 'N/A'),
+                'summary': info.get('longBusinessSummary', 'No summary available.')
+            }
+        except:
+            return {'sector': 'N/A', 'industry': 'N/A', 'ceo': 'Unknown', 'website': 'N/A', 'summary': 'Data unavailable.'}
+
     def fetch_financials(self):
         try:
             stock = yf.Ticker(self.ticker)

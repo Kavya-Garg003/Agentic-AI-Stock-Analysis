@@ -5,7 +5,10 @@ class DecisionEngineAgent:
         fund_score = self._score_fundamentals(fundamental_analysis)
         total_score += fund_score
         
-        canslim_score = (canslim_analysis.get('total_score', 0) / 7) * 30 if canslim_analysis else 0
+        canslim_raw = canslim_analysis.get('total_score', canslim_analysis.get('Total_Score', 0)) if canslim_analysis else 0
+        if isinstance(canslim_analysis, dict) and 'CANSLIM_Analysis' in canslim_analysis:
+            canslim_raw = canslim_analysis['CANSLIM_Analysis'].get('Total_Score', canslim_raw)
+        canslim_score = (canslim_raw / 7) * 30 if canslim_analysis else 0
         total_score += canslim_score
         
         sent_score = max(0, min(15, (sentiment_score + 1) * 7.5))
@@ -14,8 +17,8 @@ class DecisionEngineAgent:
         risk_score_val = (risk_assessment[0] / risk_assessment[2]) * 15
         total_score += risk_score_val
         
-        if total_score >= 70: rec, conf = "BUY", min(0.95, total_score / 100)
-        elif total_score >= 50: rec, conf = "HOLD", min(0.85, total_score / 100)
+        if total_score >= 65: rec, conf = "BUY", min(0.95, total_score / 100)
+        elif total_score >= 45: rec, conf = "HOLD", min(0.85, total_score / 100)
         else: rec, conf = "SELL", max(0.60, total_score / 100)
         
         return {
@@ -37,6 +40,6 @@ class DecisionEngineAgent:
         pe = analysis.get('valuation', {}).get('pe_ratio')
         roe = analysis.get('profitability', {}).get('roe')
         
-        if pe and 5 <= pe <= 25: score += 10
+        if pe and 0 < pe <= 40: score += 10
         if roe and roe > 0.15: score += 10
         return min(40, score)

@@ -1,0 +1,8 @@
+flask
+yfinance
+feedparser
+pandas
+numpy
+transformers
+torch
+python-dotenv
